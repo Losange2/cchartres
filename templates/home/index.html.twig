@@ -1,0 +1,18 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <div class="joueurs-container">
+        {% for joueur in joueurs %}
+            <div class="joueur-item">
+                {% include 'joueur/test.html.twig' with {'joueur': joueur} %}
+            </div>
+        {% else %}
+            <div>No joueurs found</div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'template.html.twig' %}
+
+
+{% block body %}
+    <h1>Joueur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+            <tr>
+                <th>Photo</th>
+                <td><img src="/img/silhouette.png" alt="dd" style="width: 100px; height: auto;"></td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ joueur.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ joueur.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ joueur.Prenom }}</td>
+            </tr>
+            <tr>
+                <th>DateDeNaissance</th>
+                <td>{{ joueur.DateDeNaissance ? joueur.DateDeNaissance|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie Sportive</th>
+                <td>{{ joueur.getCategorieSportive() }}</td>
+            </tr>
+            <tr> 
+                <th>Avis</th>
+                <td>
+                    <ul>
+                        {% set totalNotes = 0 %}
+                        {% set countNotes = 0 %}
+                        {% for avi in joueur.getAvis() %}
+                            {% set totalNotes = totalNotes + avi.getNote() %}
+                            {% set countNotes = countNotes + 1 %}
+                            <li>Auteur: {{ avi.getUtilisateur() }}</li>
+                            <li>Date: {{ avi.getDateDeCreation() ? avi.getDateDeCreation()|date('Y-m-d H:i:s') : '' }}</li>
+                            <li>Note: {{ avi.getNote() }}</li>
+                            <li>Commentaire: {{ avi.getCommentaire() }}</li>
+                            
+                        {% endfor %}
+                        {% if countNotes > 0 %}
+                            <li>Moyenne des notes: {{ (totalNotes / countNotes)|number_format(2) }}</li>
+                        {% else %}
+                            <li>Aucun avis</li>
+                        {% endif %}
+                        <p>Voulez vous notez ce joueur ? Laissez un avis</p>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                        {{ include('avis/_form.html.twig') }}
+                        {% else %}
+                                <a href="{{ path('app_login') }}">Connectez vous</a> pour laisser un avis
+                        {% endif %}
+                        
+                    </ul>
+                </td>
+        </tbody>
+    </table>
+{% endblock %}

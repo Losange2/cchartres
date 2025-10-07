@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Joueur{% endblock %}
+
+{% block body %}
+    <h1>Joueur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+            <tr>
+                <th>Photo</th>
+                <td><img src="/img/silhouette.png" alt="dd" style="width: 100px; height: auto;"></td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ joueur.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td><a href="{{ path('app_joueur_details', {'nom': joueur.Nom}) }}">{{ joueur.Nom }}</a></td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ joueur.Prenom }}</td>
+            </tr>
+            <tr>
+                <th>DateDeNaissance</th>
+                <td>{{ joueur.DateDeNaissance ? joueur.DateDeNaissance|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Catégorie Sportive</th>
+                <td>{{ joueur.getCategorieSportive() }}</td>
+            </tr>
+            <tr> 
+                <th>Avis</th>
+                <td>
+                    <ul>
+                        {% set totalNotes = 0 %}
+                        {% set countNotes = 0 %}
+                        {% for avi in joueur.getAvis() %}
+                            {% set totalNotes = totalNotes + avi.getNote() %}
+                            {% set countNotes = countNotes + 1 %}
+                        {% endfor %}
+                        {% if countNotes > 0 %}
+                            <li>Moyenne des notes: {{ (totalNotes / countNotes)|number_format(2) }}</li>
+                        {% else %}
+                            <li>Aucun avis</li>
+                        {% endif %}
+                        
+                    </ul>
+                </td>
+        </tbody>
+    </table>
+{% endblock %}

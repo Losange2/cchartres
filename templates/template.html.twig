@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/template.css">
+    {% block title %}<title></title>{% endblock %}
+
+</head>
+<body>
+    <nav>
+        <header>
+            <div class="logo">C'Chartres</div>
+            <ul class="auth-buttons">
+                {% if app.user %}
+                <li><a href="{{ path('app_logout') }}" style="color: inherit;">Déconnexion</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li class="admin-dropdown">
+                    <a href="#" class="admin-link" style="color: inherit;">Admin ▼</a>
+                    <ul class="admin-menu">
+                        <li><a href="{{ path('app_categorie_index') }}" style="color: inherit;">Catégorie</a></li>
+                        <li><a href="{{ path('app_niveau_index') }}" style="color: inherit;">Niveau</a></li>
+                        <li><a href="{{ path('app_joueur_index') }}" style="color: inherit;">Joueurs</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                
+                {% else %}
+                <li><a href="{{ path('app_login') }}" style="color: inherit;">Connexion</a></li>
+                <li><a href="{{ path('app_register') }}" style="color: inherit;">Inscription</a></li>
+                {% endif %}
+            </ul>
+        </header>
+    </nav>
+
+    <main>
+        <h1>C'Chartres - Joueurs de Chartres</h1>
+        {% block body %}
+            <p>Découvrez tous les joueurs de la ville de Chartres.</p>
+        {% endblock %}
+    </main>
+
+    <footer style="background: #34495e; color: white; text-align: center; padding: 1rem; margin-top: 2rem;">
+        <p>&copy; 2024 C'Chartres - Tous droits réservés</p>
+    </footer>
+</body>
+</html>
