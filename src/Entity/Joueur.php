@@ -152,4 +152,5 @@ class Joueur
 
         return $this;
     }
+    
 }
